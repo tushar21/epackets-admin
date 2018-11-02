@@ -1,37 +1,46 @@
 import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import HTTP from '../../services/http';
 
-import usersData from './UsersData'
 
-function UserRow(props) {
-  const user = props.user
-  const userLink = `#/users/${user.id}`
+class Users extends Component {
+  constructor(props){
+    super(props);
+    this.state ={
+      users : []
+    }
+    this.updateUserStatus = this.updateUserStatus.bind(this);
+  }
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
+
+  updateUserStatus(user){
+    console.log(user, "user");
+
+    HTTP.put('user/'+user.id, {status : ((user.status == '1') ? '0' : '1')})
+    .then(function(data){
+      console.log(data, "Update user status data");
+    })
+  }
+
+  componentDidMount(){
+    HTTP.get('user')
+    .then((users)=>{
+      this.setState({
+        users : users.data.data
+      })
+    })
+  }
+
+  getBadge(status) {
+    return status === '1' ? 'success' :
+      status === '0' ? 'secondary' :
         status === 'Pending' ? 'warning' :
           status === 'Banned' ? 'danger' :
             'primary'
-  }
-
-  return (
-    <tr key={user.id.toString()}>
-        <th scope="row"><a href={userLink}>{user.id}</a></th>
-        <td><a href={userLink}>{user.name}</a></td>
-        <td>{user.registered}</td>
-        <td>{user.role}</td>
-        <td><Badge href={userLink} color={getBadge(user.status)}>{user.status}</Badge></td>
-    </tr>
-  )
-}
-
-class Users extends Component {
+  } 
 
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
-
+    const {users} = this.state;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -41,22 +50,26 @@ class Users extends Component {
                 <i className="fa fa-align-justify"></i> Users
               </CardHeader>
               <CardBody>
+                {users.length ? 
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
                       <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
                       <th scope="col">status</th>
+                      <th scope="col">action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
+                    {users.length ? users.map((user, index) =>
+                      <tr key={user.id.toString()}>
+                        <td>{user.first_name + ' ' + user.last_name}</td>
+                        <td><Badge color={this.getBadge(user.status)}>{(user.status == '1')? 'Active' : 'Inactive'}</Badge></td>
+                        <td><button onClick={()=>this.updateUserStatus(user)}>{(user.status == '1')? 'DeActivate' : 'Activate'}</button></td>
+                    </tr>
+                    ): 'No users found'}
                   </tbody>
                 </Table>
+                : 'No users found' }
               </CardBody>
             </Card>
           </Col>
