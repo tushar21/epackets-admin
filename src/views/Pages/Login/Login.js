@@ -26,7 +26,6 @@ class Login extends Component {
         }
       })
       .catch((error)=> {
-          //this.setState({error: "Error in user signup"});
           this.showSnack("Error in user signup");
       });      
   }

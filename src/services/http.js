@@ -30,12 +30,16 @@ export default {
     var processedConfig = processUrl(options);
     return axios.get(processedConfig.endpoint + url,  processedConfig);
   },
-  post : function(url, payload,  options= {}){   
+  post : function(url, payload, options= {}){   
     var processedConfig = processUrl(options);    
     return axios.post(processedConfig.endpoint + url, payload, processedConfig);
   },
-  put : function(url, payload,  options= {}){
+  put : function(url, payload, options= {}){
     var processedConfig = processUrl(options);    
     return axios.put(processedConfig.endpoint + url, payload, processedConfig);
+  },
+  delete : function(url, payload, options= {}){
+    var processedConfig = processUrl(options);    
+    return axios.delete(processedConfig.endpoint + url, payload, processedConfig);
   }
 }

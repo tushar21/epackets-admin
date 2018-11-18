@@ -183,6 +183,11 @@ const User = Loadable({
 });
 
 
+const CaseBriefs = Loadable({
+  loader: () => import('./views/Cases/Relations/briefs'),
+  loading: Loading,
+});
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -227,6 +232,8 @@ const routes = [
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/cases/relations/briefs', exact: true, name: 'Case and Briefs', component: CaseBriefs },
+  
 ];
 
 export default routes;

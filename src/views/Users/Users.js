@@ -54,15 +54,17 @@ class Users extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">name</th>
-                      <th scope="col">status</th>
-                      <th scope="col">action</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.length ? users.map((user, index) =>
                       <tr key={user.id.toString()}>
                         <td>{user.first_name + ' ' + user.last_name}</td>
+                        <td>{user.email}</td>
                         <td><Badge color={this.getBadge(user.status)}>{(user.status == '1')? 'Active' : 'Inactive'}</Badge></td>
                         <td><button onClick={()=>this.updateUserStatus(user)}>{(user.status == '1')? 'DeActivate' : 'Activate'}</button></td>
                     </tr>

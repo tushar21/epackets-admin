@@ -5,6 +5,11 @@ export default {
       url: '/users',
       icon: 'icon-user'      
     },
+    {
+      name: 'Cases Briefs',
+      url: '/cases/relations/briefs',
+      icon: 'icon-list'      
+    },
     /* {
       title: true,
       name: 'Theme',

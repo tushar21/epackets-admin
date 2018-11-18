@@ -45,7 +45,7 @@ class DefaultLayout extends Component {
                     return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
                         <route.component {...props} />
                       )} />)
-                      : (null);
+                      : (null); 
                   },
                 )}
                 <Redirect from="/" to="/users" />
